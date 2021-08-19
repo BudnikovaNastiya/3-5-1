@@ -18,7 +18,7 @@ public class ProductManager {
 
     public Product[] searchBy(String text) {
         Product[] result = new Product[0];
-        for (Product item: repository.findAll()) {
+        for (Product item : repository.findAll()) {
             if (matches(item, text)) {
                 Product[] tmp = new Product[result.length + 1];
                 System.arraycopy(result, 0, tmp, 0, result.length);
@@ -30,6 +30,7 @@ public class ProductManager {
     }
 
     public boolean matches(Product product, String search) {
+
         if (product instanceof Book) {
             Book book = (Book) product;
             if (book.getName().equalsIgnoreCase(search)) {
@@ -37,8 +38,14 @@ public class ProductManager {
             }
             return book.getAuthor().equalsIgnoreCase(search);
         }
+
+        if (product instanceof Smartphone) {
+            Smartphone smartphone = (Smartphone) product;
+            if (smartphone.getName().equalsIgnoreCase(search)) {
+                return true;
+            }
+            return smartphone.getVendor().equalsIgnoreCase(search);
+        }
         return false;
     }
-
-
 }
